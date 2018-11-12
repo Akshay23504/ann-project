@@ -47,7 +47,8 @@ class PreProcess:
         for row in input_file:
             # Suppose there are worst ways to do this...
             if self.device == "phone":
-                time = convert_string_to_time(row[5])  # We already have timestamp in phone data and the UNIX timestamp ain't working
+                # We already have timestamp in phone data and the UNIX timestamp ain't working
+                time = convert_string_to_time(row[5])
             else:
                 time = convert_epoch_to_datetime(float(row[4]))
             for i in range(len(self.fall_checkpoints)):
