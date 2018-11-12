@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def convert_string_to_time(time_in_str):
-    return datetime.datetime.strptime(time_in_str, '%Y-%m-%d %H:%M:%S.%f')
+    return datetime.datetime.strptime(time_in_str, '%Y-%m-%d %H:%M:%S:%f')
 
 
 def convert_epoch_to_datetime(time_in_epoch):
@@ -14,8 +14,8 @@ def convert_epoch_to_datetime(time_in_epoch):
 class PreProcess:
     def __init__(self):
         self.user_id = "505"
-        self.sensor_name = "accelerometer"  # accelerometer or gyroscope
-        self.device = "watch"  # phone or watch
+        self.sensor_name = "gyroscope"  # accelerometer or gyroscope
+        self.device = "phone"  # phone or watch
         self.path = "../Dataset/RawFallRight/" + self.user_id + "/"
         self.filename = self.user_id + "_" + self.device + "_" + self.sensor_name + ".xlsx"
         self.filename_checkpoint = "Events" + self.user_id + ".txt"
@@ -45,13 +45,17 @@ class PreProcess:
 
         input_file = pd.ExcelFile(self.path + self.filename).parse('Sheet1').get_values()  # Sheet 1 only
         for row in input_file:
-            time = convert_epoch_to_datetime(float(row[4]))
+            # Suppose there are worst ways to do this...
+            if self.device == "phone":
+                time = convert_string_to_time(row[5])  # We already have timestamp in phone data and the UNIX timestamp ain't working
+            else:
+                time = convert_epoch_to_datetime(float(row[4]))
             for i in range(len(self.fall_checkpoints)):
                 if self.fall_checkpoints[i] <= time <= \
                         self.fall_checkpoints[i] + datetime.timedelta(seconds=self.window_size):
                     if self.entries.get(i + 1) is None:
                         self.entries[i + 1] = []
-                    self.entries[i + 1].append([i + 1, row[1], row[2], row[3], row[4]])
+                    self.entries[i + 1].append([i + 1, row[1], row[2], row[3], row[4]])  # row[4] is not required!
 
     def get_fall_instances(self):
         """

@@ -105,6 +105,6 @@ class Feature:
                               self.pre_process.sensor_name + "_features.csv")
 
 
-f = Feature(pt1.PreProcess())
-f.write_features_to_file()
+# f = Feature(pt1.PreProcess())
+# f.write_features_to_file()
 
