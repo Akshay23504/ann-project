@@ -5,7 +5,6 @@ import numpy as np
 
 class FeatureReduction:
     def __init__(self):
-        # TODO: Plot heat map
         self.threshold = 0.8
         self.features_data_frame = pd.DataFrame()
         self.user_id = "500"  # Don't know why I need this here
