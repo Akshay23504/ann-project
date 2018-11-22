@@ -1,16 +1,21 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.feature_selection import mutual_info_classif
 
 
 class FeatureReduction:
     def __init__(self):
-        self.threshold = 0.8
+        # https://www.researchgate.net/post/What_is_the_minimum_value_of_correlation_coefficient_to_prove_the_existence_of_the_accepted_relationship_between_scores_of_two_of_more_tests
+        self.threshold = 0.6
         self.features_data_frame = pd.DataFrame()
+        self.features_data_frame_merged = pd.DataFrame()
         self.user_id = "500"  # Don't know why I need this here
         self.sensor_name = "gyroscope"  # accelerometer or gyroscope
         self.device = "watch"  # phone or watch
-        self.path = "../Dataset/RawFallLeft/"
+        # This directory has values from left and right side falls and without labels
+        self.path_merged_without_labels = "../Dataset/merged_without_labels/"
+        self.path_merged = "../Dataset/merged/"
         self.filename = self.device + "_" + self.sensor_name + "_features.xlsx"
 
     def correlation(self):
@@ -21,7 +26,7 @@ class FeatureReduction:
         plt.pcolor(correlation_matrix, edgecolors='k', cmap='hot')
         plt.xticks(np.arange(0.5, len(correlation_matrix.columns), 1), correlation_matrix.columns, rotation=90)
         plt.yticks(np.arange(0.5, len(correlation_matrix.index), 1), correlation_matrix.index)
-        plt.show()
+        # plt.show()
         for i in range(len(correlation_matrix.columns)):
             for j in range(i):
                 if correlation_matrix.iloc[i, j] >= self.threshold:
@@ -30,10 +35,36 @@ class FeatureReduction:
                     # if column_to_remove in self.data.columns:
                     #     del self.data[column_to_remove]
         print(len(column_correlation))
+        print(column_correlation)
+
+    def mutual_information(self):
+        scores_label = {}
+        data = self.features_data_frame_merged.values
+        np.random.shuffle(data)
+        x = data[:, :-1]
+        y = data[:, -1:]
+        scores = mutual_info_classif(x, y.ravel())
+        feature_names = self.features_data_frame_merged.columns.values
+        for i in range(len(scores)):
+            scores_label[feature_names[i]] = scores[i]
+        scores_label = sorted(scores_label.items(), key=lambda kv: kv[1])
+        scores_label.reverse()
+        print(scores_label)
+        plt.figure(figsize=(12, 8))
+        plt.bar(np.arange(len(scores)), scores, align='center', alpha=0.5)
+        plt.xticks(np.arange(len(scores)), feature_names, rotation=90)
+        plt.ylabel('Scores')
+        plt.xlabel('Features')
+        plt.title('Information Gain')
+        plt.grid()
+        plt.show()
 
     def get_the_features(self):
-        self.features_data_frame = pd.ExcelFile(self.path + self.filename).parse('Sheet1')  # Sheet 1 only
+        # Sheet 1 only
+        self.features_data_frame = pd.ExcelFile(self.path_merged_without_labels + self.filename).parse('Sheet1')
+        self.features_data_frame_merged = pd.ExcelFile(self.path_merged + self.filename).parse('Sheet1')
         self.correlation()
+        self.mutual_information()
 
 
 feature_reduction = FeatureReduction()
