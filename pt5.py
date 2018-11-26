@@ -1,0 +1,58 @@
+import pandas as pd
+import numpy as np
+from sklearn.metrics import confusion_matrix as cm
+from sklearn.metrics import classification_report as cr
+from sklearn.metrics import accuracy_score as acs
+from sklearn.svm import SVC
+
+
+class FeatureReductionPart2:
+    # TODO: Borrow comments from homeworks
+    def __init__(self):
+        self.train_features_data_frame = pd.DataFrame()
+        self.test_features_data_frame = pd.DataFrame()
+        self.sensor_name = "sensor"  # accelerometer or gyroscope or sensor
+        self.device = "phone"  # phone or watch
+        self.path_merged = "../Dataset/merged/"
+        self.train_filename = self.device + "_" + self.sensor_name + "_features_train.xlsx"
+        self.test_filename = self.device + "_" + self.sensor_name + "_features_test.xlsx"
+        self.X_train = np.asarray([])  # Training data
+        self.y_train = np.asarray([])  # Training data (labels)
+        self.X_test = np.asarray([])  # Testing data
+        self.y_test = np.asarray([])  # Testing data (labels)
+        self.svm_kernel = 'rbf'  # Kernel for SVM. 'rbf' is Gaussian. 'linear' is linear
+
+    def run_svm(self):
+        sv_classifier = SVC(kernel=self.svm_kernel)  # Initialize the classifier with a kernel
+        sv_classifier.fit(self.X_train, self.y_train)  # Fit the training data
+        y_pred = sv_classifier.predict(self.X_test)  # Predict the results on testing data and the classifier
+        self.print_metrics(y_pred)  # Print the metrics
+
+    def print_metrics(self, predicted_output):
+        res = cm(self.y_test, predicted_output)
+        tp = res[0][0]
+        fn = res[1][0]
+        fp = res[0][1]
+        tn = res[1][1]
+        print("Accuracy: ", acs(self.y_test, predicted_output))
+        print("TP: ", tp, ", FN: ", fn, ", FP: ", fp, "TN: ", tn)
+        print(cr(self.y_test, predicted_output))
+
+    def get_the_features(self):
+        # Sheet 1 only
+        self.train_features_data_frame = pd.ExcelFile(self.path_merged + self.train_filename).parse('Sheet1')
+        self.test_features_data_frame = pd.ExcelFile(self.path_merged + self.test_filename).parse('Sheet1')
+        train_data = self.train_features_data_frame.values
+        test_data = self.test_features_data_frame.values
+        np.random.shuffle(train_data)
+        np.random.shuffle(test_data)
+        self.X_train = train_data[:, :-1]
+        self.X_test = test_data[:, :-1]
+        self.y_train = train_data[:, -1:]
+        self.y_test = test_data[:, -1:]
+        print()
+
+
+feature_reduction_part2 = FeatureReductionPart2()
+feature_reduction_part2.get_the_features()
+
