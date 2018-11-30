@@ -14,14 +14,14 @@ def convert_epoch_to_datetime(time_in_epoch):
 class PreProcess:
     def __init__(self):
         self.user_id = "505"
-        self.sensor_name = "gyroscope"  # accelerometer or gyroscope
         self.device = "phone"  # phone or watch
+        self.sensor_name = "gyroscope"  # accelerometer or gyroscope
         self.path = "../Dataset/RawFallRight/" + self.user_id + "/"
         self.filename = self.user_id + "_" + self.device + "_" + self.sensor_name + ".xlsx"
         self.filename_checkpoint = "Events" + self.user_id + ".txt"
         self.fall_checkpoints = []
         self.entries = {}
-        self.window_size = 3  # In seconds
+        self.window_size = 1  # In seconds
         self.fall_instance_dimension = {}
 
     def store_checkpoints(self):

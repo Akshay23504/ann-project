@@ -16,7 +16,7 @@ class FeatureReduction:
         # This directory has values from left and right side falls and without labels
         self.path_merged_without_labels = "../Dataset/merged_without_labels/"
         self.path_merged = "../Dataset/merged/"
-        self.filename = self.device + "_" + self.sensor_name + "_features.xlsx"
+        self.filename = self.device + "_" + self.sensor_name + "_features_1.xlsx"
 
     def correlation(self):
         # We can also do a zip and check...but ehhh
@@ -57,7 +57,7 @@ class FeatureReduction:
         plt.xlabel('Features')
         plt.title('Information Gain')
         plt.grid()
-        plt.show()
+        # plt.show()
 
     def get_the_features(self):
         # Sheet 1 only

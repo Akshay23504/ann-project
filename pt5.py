@@ -9,14 +9,15 @@ from sklearn.naive_bayes import GaussianNB
 
 class FeatureReductionPart2:
     # TODO: Borrow comments from homeworks
+    # TODO: Remove Entropy
     def __init__(self):
         self.train_features_data_frame = pd.DataFrame()
         self.test_features_data_frame = pd.DataFrame()
         self.sensor_name = "sensor"  # accelerometer or gyroscope or sensor
-        self.device = "watch"  # phone or watch
+        self.device = "phone"  # phone or watch
         self.path_merged = "../Dataset/merged/"
-        self.train_filename = self.device + "_" + self.sensor_name + "_features_train.xlsx"
-        self.test_filename = self.device + "_" + self.sensor_name + "_features_test.xlsx"
+        self.train_filename = self.device + "_" + self.sensor_name + "_features_train_1.xlsx"
+        self.test_filename = self.device + "_" + self.sensor_name + "_features_test_1.xlsx"
         self.X_train = np.asarray([])  # Training data
         self.y_train = np.asarray([])  # Training data (labels)
         self.X_test = np.asarray([])  # Testing data
@@ -60,7 +61,7 @@ class FeatureReductionPart2:
 
         # To delete one column
         # column_index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
-        column_index = [0]
+        column_index = []
         self.X_train = np.delete(self.X_train, column_index, axis=1)
         self.X_test = np.delete(self.X_test, column_index, axis=1)
 
