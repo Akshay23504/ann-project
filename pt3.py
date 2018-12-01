@@ -11,12 +11,12 @@ class FeatureReduction:
         self.features_data_frame = pd.DataFrame()
         self.features_data_frame_merged = pd.DataFrame()
         self.user_id = "500"  # Don't know why I need this here
-        self.sensor_name = "gyroscope"  # accelerometer or gyroscope
-        self.device = "watch"  # phone or watch
+        self.sensor_name = "accelerometer"  # accelerometer or gyroscope
+        self.device = "phone"  # phone or watch
         # This directory has values from left and right side falls and without labels
-        self.path_merged_without_labels = "../Dataset/merged_without_labels/"
+        self.path_merged_without_labels = "../Dataset/RawFallRight/"
         self.path_merged = "../Dataset/merged/"
-        self.filename = self.device + "_" + self.sensor_name + "_features_1.xlsx"
+        self.filename = self.device + "_" + self.sensor_name + "_features_lr.xlsx"
 
     def correlation(self):
         # We can also do a zip and check...but ehhh
@@ -61,9 +61,9 @@ class FeatureReduction:
 
     def get_the_features(self):
         # Sheet 1 only
-        self.features_data_frame = pd.ExcelFile(self.path_merged_without_labels + self.filename).parse('Sheet1')
+        # self.features_data_frame = pd.ExcelFile(self.path_merged_without_labels + self.filename).parse('Sheet1')
         self.features_data_frame_merged = pd.ExcelFile(self.path_merged + self.filename).parse('Sheet1')
-        self.correlation()
+        # self.correlation()
         self.mutual_information()
 
 
