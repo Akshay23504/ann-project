@@ -183,7 +183,7 @@ class NeuralNetwork:
         start_time = time.time()  # Start the timer
         learning_vector_quantization = LVQ2(n_inputs=self.X_train.shape[1], n_classes=2, step=self.lvq2_eta,
                                             n_subclasses=2)  # Initialize LVQ2 with regular and hyper parameters
-        # Train the quantizer with number of epcohs
+        # Train the quantizer with number of epochs
         learning_vector_quantization.train(self.X_train, self.y_train, epochs=self.lvq2_epochs)
         # Predict the results on testing data and the quantizer
         y_pred = learning_vector_quantization.predict(self.X_test)
