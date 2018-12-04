@@ -169,4 +169,3 @@ class PreProcess:
 # pre_process.store_fall_instances()
 # pre_process.get_fall_instances()
 #
-print()

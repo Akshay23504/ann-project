@@ -252,4 +252,3 @@ class FeatureExtraction:
 
 f = FeatureExtraction(pre_process.PreProcess())
 f.write_features_to_file()
-

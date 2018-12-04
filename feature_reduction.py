@@ -30,10 +30,10 @@ class FeatureReduction:
         self.features_data_frame_merged = pd.DataFrame()  # Initialize panda data frames
         self.user_id = "500"  # Don't know why I need this here
         self.sensor_name = "accelerometer"  # accelerometer or gyroscope
-        self.device = "phone"  # phone or watch
-        self.path_merged_without_labels = "../Dataset/RawFallRight/"
+        self.device = "watch"  # phone or watch
+        self.path_merged_without_labels = "../Dataset/merged_without_labels/"
         self.path_merged = "../Dataset/merged/"
-        self.filename = self.device + "_" + self.sensor_name + "_features_lr.xlsx"
+        self.filename = self.device + "_" + self.sensor_name + "_features.xlsx"
 
     def correlation(self):
         """
@@ -109,9 +109,9 @@ class FeatureReduction:
         """
 
         # Sheet 1 only
-        # self.features_data_frame = pd.ExcelFile(self.path_merged_without_labels + self.filename).parse('Sheet1')
+        self.features_data_frame = pd.ExcelFile(self.path_merged_without_labels + self.filename).parse('Sheet1')
         self.features_data_frame_merged = pd.ExcelFile(self.path_merged + self.filename).parse('Sheet1')
-        # self.correlation()
+        self.correlation()
         self.mutual_information()
 
 

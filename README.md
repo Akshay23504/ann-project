@@ -1,8 +1,10 @@
-### Some App - An Artificial Neural Networks Project
+### We Have Got Your Back - An Artificial Neural Networks Project
 
 Before we begin, this code will not work. Because there is no dataset here and the dataset is not pushed to the GitHub repository because of security and novelty reasons.
 
-The aim of this project is to recognize a fall before the fall happens. And the applications for this are many.
+The aim of this project is to recognize a fall before the fall happens. Different machine learning algorithms and neural networks are used to build and test the models. 
+
+The applications for this problem statement are many including aid for old people, sports persons etc.
 
 #### Steps:
 1. Collection of data using smartwatch and smartphone
