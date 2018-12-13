@@ -25,6 +25,7 @@ def convert_epoch_to_datetime(time_in_epoch):
 
     :param time_in_epoch: Floating epoch variable
     :return: The datetime format of the parameter
+
     """
 
     return datetime.datetime.fromtimestamp(time_in_epoch / 1000)  # 1000 is for milliseconds

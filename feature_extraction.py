@@ -71,6 +71,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(np.var(values))
 
     def feature_standard_deviance(self, values):
@@ -81,6 +82,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(np.std(values))
 
     def feature_median_absolute_deviation(self, values):
@@ -91,6 +93,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(robust.mad(values))
 
     def feature_interquartile_range(self, values):
@@ -101,6 +104,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(scs.iqr(values))
 
     def feature_power(self, values):
@@ -111,6 +115,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(sum(np.array(np.square(np.abs(values)))) / len(values))
 
     def feature_energy(self, values):
@@ -121,6 +126,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(sum(np.array(np.square(np.abs(values)))))
 
     def feature_peak_to_peak_amplitude(self, values):
@@ -131,6 +137,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(max(values) - min(values))
 
     def feature_auto_correlation(self, values):
@@ -142,6 +149,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         result = pd.Series(values)
         self.feature_list.append(pd.Series.autocorr(result))
 
@@ -153,6 +161,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(scs.kurtosis(values))
 
     def feature_skew(self, values):
@@ -163,6 +172,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_list.append(scs.skew(values))
 
     def get_me_all_features(self, values):
@@ -173,6 +183,7 @@ class FeatureExtraction:
         :param values: Dimension (x, y or z) values
 
         """
+
         self.feature_mean(values)
         self.feature_median(values)
         self.feature_variance(values)
@@ -194,6 +205,7 @@ class FeatureExtraction:
         formulates the data as needed for the feature extraction.
 
         """
+
         self.pre_process.store_checkpoints()
         self.pre_process.store_fall_instances()
         self.pre_process.get_fall_instances()
